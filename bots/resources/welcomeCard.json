@@ -13,7 +13,7 @@
       "spacing": "medium",
       "size": "default",
       "weight": "bolder",
-      "text": "Welcome to Fly Me Bot !",
+      "text": "Hello i'm the Fly Me Bot !",
       "wrap": true,
       "maxLines": 0
     },
@@ -21,7 +21,7 @@
       "type": "TextBlock",
       "size": "default",
       "isSubtle": "true",
-      "text": "Fly Me bot, the bot to book a travel :)",
+      "text": "I help you to book a travel :)",
       "wrap": true,
       "maxLines": 0
     }
