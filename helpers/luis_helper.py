@@ -9,9 +9,8 @@ from booking_details import BookingDetails
 
 
 class Intent(Enum):
-    BOOK_FLIGHT = "BookFlight"
-    CANCEL = "Cancel"
-    GET_WEATHER = "GetWeather"
+    BOOK_FLIGHT = "OrderTravelIntent"
+    GREETING_INTENT= "GreetingsIntent"
     NONE_INTENT = "NoneIntent"
 
 
@@ -55,46 +54,44 @@ class LuisHelper:
                 result = BookingDetails()
 
                 # We need to get the result from the LUIS JSON which at every level returns an array.
-                to_entities = recognizer_result.entities.get("$instance", {}).get(
-                    "To", []
-                )
-                if len(to_entities) > 0:
-                    if recognizer_result.entities.get("To", [{"$instance": {}}])[0][
-                        "$instance"
-                    ]:
-                        result.destination = to_entities[0]["text"].capitalize()
-                    else:
-                        result.unsupported_airports.append(
-                            to_entities[0]["text"].capitalize()
-                        )
-
-                from_entities = recognizer_result.entities.get("$instance", {}).get(
-                    "From", []
-                )
+                from_entities = recognizer_result.entities.get("$instance", {}).get("DepartureCity", [])
                 if len(from_entities) > 0:
-                    if recognizer_result.entities.get("From", [{"$instance": {}}])[0][
-                        "$instance"
-                    ]:
-                        result.origin = from_entities[0]["text"].capitalize()
-                    else:
-                        result.unsupported_airports.append(
-                            from_entities[0]["text"].capitalize()
-                        )
+                    result.origin = from_entities[0]["text"].capitalize()
+
+                #destination
+                to_entities = recognizer_result.entities.get("$instance", {}).get("ArrivalCity", [])
+                if len(to_entities) > 0:
+                    result.destination = to_entities[0]["text"].capitalize()
 
                 # This value will be a TIMEX. And we are only interested in a Date so grab the first result and drop
                 # the Time part. TIMEX is a format that represents DateTime expressions that include some ambiguity.
                 # e.g. missing a Year.
                 date_entities = recognizer_result.entities.get("datetime", [])
                 if date_entities:
-                    timex = date_entities[0]["timex"]
+                    if len(date_entities)==1:
+                        timex = date_entities[0]["timex"]
+                        if date_entities[0]['type'] == 'daterange':
+                            datetime_range = timex[0].strip('(').strip(')').split(',')
+                            result.start_travel_date = datetime_range[0]
+                            result.end_travel_date = datetime_range[1]
+                        elif date_entities[0]['type'] == 'date':
+                            result.start_travel_date = timex[0]
+                    
+                    elif len(date_entities)==2:
+                        timex1 = date_entities[0]["timex"]
+                        timex2 = date_entities[1]["timex"]
+                        if timex1[0] <= timex2[0]:
+                            result.start_travel_date = timex1[0]
+                            result.end_travel_date = timex2[0]
+                        else:
+                            result.start_travel_date = timex2[0]
+                            result.end_travel_date = timex1[0]
 
-                    if timex:
-                        datetime = timex[0].split("T")[0]
-
-                        result.travel_date = datetime
-
-                else:
-                    result.travel_date = None
+                            
+                #budget
+                budget_entities = recognizer_result.entities.get("$instance", {}).get("Price", [])
+                if len(budget_entities) > 0:
+                    result.budget = budget_entities[0]["text"]
 
         except Exception as exception:
             print(exception)
