@@ -14,7 +14,6 @@ class DefaultConfig:
     APP_TYPE = os.environ.get("MicrosoftAppType")
     LUIS_APP_ID = os.environ.get("LuisAppId")
     LUIS_API_KEY = os.environ.get("LuisAPIKey")
-    LUIS_API_ENDPOINT = os.environ.get("LuisAPIEndPoint")
     LUIS_API_HOST_NAME = os.environ.get("LuisAPIHostName")
     APPINSIGHTS_INSTRUMENTATION_KEY = os.environ.get(
         "AppInsightsInstrumentationKey"
