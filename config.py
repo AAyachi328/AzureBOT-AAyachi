@@ -11,6 +11,7 @@ class DefaultConfig:
     PORT = 8000
     APP_ID = os.environ.get("MicrosoftAppId")
     APP_PASSWORD = os.environ.get("MicrosoftAppPassword")
+    APP_TYPE = os.environ.get("MicrosoftAppType")
     LUIS_APP_ID = os.environ.get("LuisAppId")
     LUIS_API_KEY = os.environ.get("LuisAPIKey")
     LUIS_API_ENDPOINT = os.environ.get("LuisAPIEndPoint")
