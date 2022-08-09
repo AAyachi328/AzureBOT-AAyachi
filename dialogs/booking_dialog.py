@@ -66,7 +66,7 @@ class BookingDialog(CancelAndHelpDialog):
             return await step_context.prompt(
                 TextPrompt.__name__,
                 PromptOptions(
-                    prompt=MessageFactory.text("From what city will you be travelling?")
+                    prompt=MessageFactory.text("From which city would you like to leave?")
                 ),
             )  # pylint: disable=line-too-long,bad-continuation
 
@@ -85,7 +85,7 @@ class BookingDialog(CancelAndHelpDialog):
             return await step_context.prompt(
                 TextPrompt.__name__,
                 PromptOptions(
-                    prompt=MessageFactory.text("To what city would you like to travel?")
+                    prompt=MessageFactory.text("To which city would you like to go?")
                 ),
             )  # pylint: disable=line-too-long,bad-continuation
 
@@ -94,7 +94,7 @@ class BookingDialog(CancelAndHelpDialog):
 
     async def start_travel_date_step(self, step_context: WaterfallStepContext) -> DialogTurnResult:
         """Prompt for travel start date.
-        This will use the DATE_RESOLVER_DIALOG."""
+        This will use the START_DATE_RESOLVER_DIALOG."""
         self.chat_history["chat_destination"] = step_context._turn_context.activity.text
 
         booking_details = step_context.options
@@ -113,7 +113,7 @@ class BookingDialog(CancelAndHelpDialog):
 
     async def end_travel_date_step(self, step_context: WaterfallStepContext) -> DialogTurnResult:
         """Prompt for travel end date.
-        This will use the DATE_RESOLVER_DIALOG."""
+        This will use the END_DATE_RESOLVER_DIALOG."""
 
 
         self.chat_history["chat_start_travel_date"] = step_context._turn_context.activity.text
@@ -145,7 +145,7 @@ class BookingDialog(CancelAndHelpDialog):
             return await step_context.prompt(
                 TextPrompt.__name__,
                 PromptOptions(
-                    prompt=MessageFactory.text("What is your budget for the travel?")
+                    prompt=MessageFactory.text("What is your budget?")
                 ),
             )  # pylint: disable=line-too-long,bad-continuation
 
@@ -175,7 +175,7 @@ class BookingDialog(CancelAndHelpDialog):
         )
 
     async def final_step(self, step_context: WaterfallStepContext) -> DialogTurnResult:
-        """Complete the interaction, create trace for monitoring and end the dialog."""
+        """Complete and tracing for monitoring"""
         self.chat_history["chat_validation_by_user"] = step_context._turn_context.activity.text
 
         booking_details = step_context.options
@@ -188,12 +188,12 @@ class BookingDialog(CancelAndHelpDialog):
         booking_info["budget"] = booking_details.budget
 
         if step_context.result:
-            self.telemetry_client.track_trace("Transaction confirmed by the user : YES", booking_info, "INFO")
-            self.telemetry_client.track_trace("CHAT_HISTORY_INFO", self.chat_history, "INFO")
+            self.telemetry_client.track_trace("Transaction CONFIRMED, booking_info, "INFO")
+            self.telemetry_client.track_trace("CHAT_HISTORY", self.chat_history, "INFO")
             return await step_context.end_dialog(booking_details)
         else:
-            self.telemetry_client.track_trace("Transaction confirmed by the user : NO", booking_info, "ERROR")
-            self.telemetry_client.track_trace("CHAT_HISTORY_ERROR", self.chat_history, "ERROR")
+            self.telemetry_client.track_trace("Transaction DISMISSED", booking_info, "ERROR")
+            self.telemetry_client.track_trace("CHAT_ERROR", self.chat_history, "ERROR")
             return await step_context.end_dialog()
 
 
