@@ -49,7 +49,7 @@ class EndDateResolverDialog(CancelAndHelpDialog):
         """Prompt for the date."""
         timex = step_context.options
 
-        prompt_msg = "On what end date would you like to travel?"
+        prompt_msg = "When do you want to come back from travel?"
         reprompt_msg = (
             "I'm sorry, for best results, please enter your travel "
             "end date including the month, day and year."

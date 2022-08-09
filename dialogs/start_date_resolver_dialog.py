@@ -49,7 +49,7 @@ class StartDateResolverDialog(CancelAndHelpDialog):
         """Prompt for the date."""
         timex = step_context.options
 
-        prompt_msg = "On what start date would you like to travel?"
+        prompt_msg = "When do you want to leave?"
         reprompt_msg = (
             "I'm sorry, for best results, please enter your travel "
             "start date including the month, day and year."
