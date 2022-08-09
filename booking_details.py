@@ -14,5 +14,8 @@ class BookingDetails:
             unsupported_airports = []
         self.destination = destination
         self.origin = origin
+        self.start_travel_date = travel_date
+        self.end_travel_date = travel_date
+        self.budget = travel_date
         self.travel_date = travel_date
         self.unsupported_airports = unsupported_airports
