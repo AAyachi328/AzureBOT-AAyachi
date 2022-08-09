@@ -188,7 +188,7 @@ class BookingDialog(CancelAndHelpDialog):
         booking_info["budget"] = booking_details.budget
 
         if step_context.result:
-            self.telemetry_client.track_trace("Transaction CONFIRMED, booking_info, "INFO")
+            self.telemetry_client.track_trace("Transaction CONFIRMED", booking_info, "INFO")
             self.telemetry_client.track_trace("CHAT_HISTORY", self.chat_history, "INFO")
             return await step_context.end_dialog(booking_details)
         else:
