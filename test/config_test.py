@@ -5,7 +5,7 @@
 
 import os
 
-class DefaultConfig:
+class TestConfig:
     """Configuration for the bot."""
 
     PORT = 8000
