@@ -16,5 +16,5 @@ class DefaultConfig:
     LUIS_API_HOST_NAME = os.environ.get("LuisAPIHostName","")
     LUIS_API_ENDPOINT = os.environ.get("LuisAPIEndPoint","")
     APPINSIGHTS_INSTRUMENTATION_KEY = os.environ.get(
-        "AppInsightsInstrumentationKey",""
+        "AppInsightsInstrumentationKey","xx"
     )
