@@ -31,7 +31,7 @@ def test_origin_entity():
     test_request = "I need a trip from London"
     test_response = client_runtime.prediction.resolve(CONFIG.LUIS_APP_ID, query=test_request)
 
-    expected_origin = "busan"
+    expected_origin = "london"
     actual_origin = ""
     if test_response.entities[0].type == 'DepartureCity':
         actual_origin = test_response.entities[0].entity
