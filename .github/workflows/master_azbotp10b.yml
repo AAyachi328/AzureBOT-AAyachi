@@ -31,9 +31,7 @@ jobs:
         run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-      - name: Run unit tests
-        run: python -m pytest --import-mode=append test
-        
+      
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
@@ -62,4 +60,4 @@ jobs:
         with:
           app-name: 'azbotp10b'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E1458FABFA6845C19575278F3FA71ECD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24503E9130094466B1C3EC44E93305E1 }}
