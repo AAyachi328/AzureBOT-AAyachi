@@ -120,7 +120,7 @@ class MainDialog(ComponentDialog):
             # If the call to the booking service was successful tell the user.
             # time_property = Timex(result.travel_date)
             # travel_date_msg = time_property.to_natural_language(datetime.now())
-            msg_txt = (f"I have you booked from {result.origin} to {result.destination}"
+            msg_txt = (f"I booked for you a ticket from {result.origin} to {result.destination}"
                         f" from the {result.start_travel_date} to the {result.end_travel_date}"
                         f" for a budget of {result.budget}"
             )
